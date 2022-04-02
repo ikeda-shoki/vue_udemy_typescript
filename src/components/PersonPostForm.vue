@@ -8,7 +8,13 @@
 
   const register = () => {
     const person = { id: Math.random(), name: name.value, age: age.value };
+    resetForm();
     emit('register', person);
+  }
+
+  const resetForm = () => {
+    name.value = "";
+    age.value = 0;
   }
 
   const nameLengthLimit = 15;
