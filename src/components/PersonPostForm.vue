@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { ref } from 'vue';
+  import { computed, ref } from 'vue';
 
   const name = ref<string>('');
   const age = ref<number>(0);
@@ -11,7 +11,19 @@
     emit('register', person);
   }
 
-  const color = 'white';
+  const nameLengthLimit = 15;
+
+  const isValidName = computed(() => {
+    if (name.value.length >= nameLengthLimit) {
+      return false;
+    } else {
+      return true;
+    }
+  });
+
+  const color = computed(() => {
+    return isValidName.value ? 'white' : 'rgb(244, 194, 190)';
+  });
 
 </script>
 
@@ -21,16 +33,23 @@
       <span>name:</span>
       <input class="input-name" v-model="name"/>
     </div>
-    <div class="input-column">
+    <span v-if="!isValidName" class="error-message">{{ nameLengthLimit }} characters or less, please</span>
+    <div class="input-container">
       <span>age:</span>
       <input class="input" v-model="age" type="number"/>
     </div>
 
-    <button class="register-button" @click="register()">登録</button>
+    <button :disabled="!isValidName" class="register-button" @click="register()">登録</button>
   </div>
 </template>
 
 <style scoped>
+  .error-message {
+    font-size: 12px;
+    color: rgb(244, 194, 190);
+    font-weight: bold;
+  }
+
   .form-container {
     display: flex;
     flex-direction: column;
