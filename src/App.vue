@@ -1,9 +1,9 @@
 <script setup lang="ts">
-  import Persons from './components/Persons.vue'
+  import Reservation from './components/Reservation.vue';
 </script>
 
 <template>
-  <Persons />
+  <Reservation />
 </template>
 
 <style>
