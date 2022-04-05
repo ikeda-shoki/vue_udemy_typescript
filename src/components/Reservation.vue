@@ -6,8 +6,11 @@
 
   const isListVisible = ref<boolean>(true);
 
+  const isDialogOpen = ref<boolean>(false);
+
   const onClickButton = () => {
-    isListVisible.value = !isListVisible.value;
+    // isListVisible.value = !isListVisible.value;
+    isDialogOpen.value = !isDialogOpen.value;
   }
 
   const getContent = () => {
@@ -36,6 +39,12 @@
     <component :is="getContent()" />
 
     <button @click="onClickButton()">Change</button>
+
+    <teleport to="body">
+      <dialog :open="isDialogOpen" class="dialog">
+        <span>Dialog</span>
+      </dialog>
+    </teleport>
   </div>
 </template>
 
@@ -70,5 +79,17 @@
   .normal-badge {
     background-color: #002c8a;
     color: white;
+  }
+
+  .dialog {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 200px;
+    width: 400px;
+    margin: auto;
+    background-color: aliceblue;
   }
 </style>
