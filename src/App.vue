@@ -18,11 +18,15 @@
 
   // InjectionKeyを使用して、引き渡す場合
   provide(todoKey, todos);
+
+  // セクション10
+  import Form from './components/Form.vue';
 </script>
 
 <template>
-  <!-- <Reservation /> -->
-  <TodoLists />
+  <!-- <Reservation /> セクション9 -->
+  <!-- <TodoLists /> セクション10 -->
+  <Form />
 </template>
 
 <style>
@@ -32,5 +36,19 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+}
+
+/* セクション10 */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: sans-serif;
+}
+
+body {
+  margin: 0;
+  background-color: #292929;
 }
 </style>
