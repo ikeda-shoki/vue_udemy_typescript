@@ -4,7 +4,9 @@
 
   import { provide } from 'vue'
 
-  import { todos, addTodo } from './useTodo'
+  // import { todos, addTodo } from './useTodo'
+
+  import { todos, todoKey } from './useTodo';
 
   // provide を使用すると子のコンポーネントにキーを指定するとオブジェクトを渡せる
   // 下記ではtodosというキーで上記でインポートしたtodosを子コンポーネントに渡せる(TodoLists)
@@ -12,7 +14,10 @@
   // provide('addTodo', addTodo);
 
   // 難しい書き方で引き渡す場合
-  provide('todos', todos);
+  // provide('todos', todos);
+
+  // InjectionKeyを使用して、引き渡す場合
+  provide(todoKey, todos);
 </script>
 
 <template>

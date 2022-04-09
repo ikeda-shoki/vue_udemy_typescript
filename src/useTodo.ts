@@ -1,5 +1,5 @@
 // vueで使用するrefをTSでインポートする
-import { ref } from 'vue';
+import { ref, InjectionKey } from 'vue';
 
 // Todo型を定義する オブジェクトを定義する際はtypeを使用する
 type Todo = {
@@ -43,3 +43,13 @@ export const todos = (() => {
 
   return { todos, addTodo }
 })()
+
+type TodosType = typeof todos;
+
+// Symbolとは → 一意のプロパティを生成するもの
+// 値を確認することは出来ないが、他のものとは全く別物であるプロパティである。
+// 値を確認することが出来ない為、IDなどには使用することが出来ない。
+// 下記の例で行くと、useTodosという文字列を定義しているが、他のuseTodosと定義されている文字列とは違う文字列として認証されるようなもの
+
+// InjectionKey は Symbol しか受け取らない型で固有(値が同じでも他のものと同一化しない)の値を受け取る
+export const todoKey: InjectionKey<TodosType> = Symbol('useTodos')
