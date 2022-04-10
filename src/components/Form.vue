@@ -9,12 +9,23 @@ const userName = ref<string>('');
 
 // mounted は画面にVueがHTMLにマウントされる際に挙動する
 const vFocus = {
-  mounted: (el: HTMLElemnt) => {
+  mounted: (el: HTMLElemnt, binding: DirectiveBinding) => {
     // el に対して focus() メソッドでinputタグに自動でフォーカス(選択)される
     el.focus();
 
-    // console.log('mounted')
+    // modifiersはディレクティブに追加の処理をする役割を持つ
+    // 定義の仕方は下記のように、上で引数に受けっているbindingのmodifiersオブジェクトに好きな文字列を定義することで
+    // カスタム修飾詞を定義することが出来る
+    // 下記ではvFocusディレクティブを定義しているディレクティブに下記のstylePinkを修飾することで色をビンクにすることが出来る
+    if (binding.modifiers.stylePink) {
+      el.style.backgroundColor = 'pink';
+    }
   }
+}
+
+const onSubmit = () => {
+  console.log('submit');
+  console.log(userName.value);
 }
 
 </script>
@@ -23,11 +34,11 @@ const vFocus = {
   <form>
     <div class="form-control">
       <label for="user-name">Your Name</label>
-      <input id="user-name" name="user-name" type="text" />
+      <input id="user-name" name="user-name" type="text" v-model="userName" v-focus.stylePink/>
     </div>
     <div class="form-control">
       <label for="age">Your Age</label>
-      <input id="age" name="age" type="number" v-focus/>
+      <input id="age" name="age" type="number"/>
     </div>
     <div class="form-control">
       <label for="from">Where Are you from?</label>
@@ -68,7 +79,8 @@ const vFocus = {
       </div>
     </div>
     <div>
-      <button>Save Data</button>
+      <!-- prevent → modifiersの一種 処理に追加の処理を行うようなもの -->
+      <button @click.prevent="onSubmit()">Save Data</button>
     </div>
   </form>
 </template>
