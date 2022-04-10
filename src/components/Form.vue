@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 
 const userName = ref<string>('');
 
@@ -26,7 +26,35 @@ const vFocus = {
 const onSubmit = () => {
   console.log('submit');
   console.log(userName.value);
+  console.log(interest.value);
+  console.log(radios.value);
+
+  interest.value = [];
 }
+
+// section 54
+// selectタグの初期値の入れ方
+// 値となる文字列を入れておき、v-modelで定義し、双方向バインディングしておく
+// 選択肢にない値を入れるとセレクトボックスでは空白になる
+const from = ref<string>('japan')
+
+// チェックボックス
+// 配列をrefで定義する際は下記のように書くこと
+// 下記のように定義した後、HTMLのinputタグにvalueを設定することでvalue値がinterest内に追加されていく
+// チェックボックスが単一の場合は boolean 型を採用し、チェックが付いてる時は true 付いてない時は false で定義する
+// 例) const interest = ref<boolean>(false) 初期値がチェック無しになる
+// チェックボックスが複数の場合は下記のように配列を定義し、HTMLのinputタグに指定したvalueを配列の文字列に入れることで初期値を入れる
+// 下記のように react, vue を配列内に入れていると、react, vue が初めからチェックされている状態になる
+const interest = ref(['react', 'vue']);
+
+// Vue で使用される warch() は第一引数に入れている値が監視対象になり、ページ内で値が変更された時に
+// 第二引数で使用されているメソッドが起動する仕組み
+watch (interest, () => { console.log('interest', interest.value) })
+
+// ラジオボタン
+// 基本的に選択される内容が一つの為、扱いはセレクトタグと同様の扱い方をする
+const radios = ref<string>('book');
+watch (radios, () => { console.log('radios', radios.value) })
 
 </script>
 
@@ -42,7 +70,7 @@ const onSubmit = () => {
     </div>
     <div class="form-control">
       <label for="from">Where Are you from?</label>
-      <select id="from" name="from">
+      <select id="from" name="from" v-model="from">
         <option value="japan">Japan</option>
         <option value="china">China</option>
         <option value="others">Others</option>
@@ -51,30 +79,30 @@ const onSubmit = () => {
     <div class="form-control">
       <h2>What are you interested in?</h2>
       <div>
-        <input id="interest-react" name="interest" type="checkbox" />
+        <input id="interest-react" name="interest" type="checkbox" value="react" v-model="interest"/>
         <label for="interest-react">React.js</label>
       </div>
       <div>
-        <input id="interest-vue" name="interest" type="checkbox" />
+        <input id="interest-vue" name="interest" type="checkbox" value="vue" v-model="interest"/>
         <label for="interest-vue">Vue.js</label>
       </div>
       <div>
-        <input id="interest-angular" name="interest" type="checkbox" />
+        <input id="interest-angular" name="interest" type="checkbox" value="angular" v-model="interest"/>
         <label for="interest-angular">Angular.js</label>
       </div>
     </div>
     <div class="form-control">
       <h2>How do you learn?</h2>
       <div>
-        <input id="how-video" name="how" type="radio" />
+        <input id="how-video" name="how" type="radio" value="video" v-model="radios" />
         <label for="how-video">Video Courses</label>
       </div>
       <div>
-        <input id="how-books" name="how" type="radio" />
+        <input id="how-books" name="how" type="radio" value="book" v-model="radios"/>
         <label for="how-books">Books</label>
       </div>
       <div>
-        <input id="how-other" name="how" type="radio" />
+        <input id="how-other" name="how" type="radio" value="other" v-model="radios"/>
         <label for="how-other">Other</label>
       </div>
     </div>
