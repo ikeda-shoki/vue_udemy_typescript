@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
+import Rating from './Rating.vue'
 
 const userName = ref<string>('');
 
@@ -28,6 +29,7 @@ const onSubmit = () => {
   console.log(userName.value);
   console.log(interest.value);
   console.log(radios.value);
+  console.log(ratings.value);
 
   interest.value = [];
 }
@@ -55,6 +57,9 @@ watch (interest, () => { console.log('interest', interest.value) })
 // 基本的に選択される内容が一つの為、扱いはセレクトタグと同様の扱い方をする
 const radios = ref<string>('book');
 watch (radios, () => { console.log('radios', radios.value) })
+
+// section55 カスタムコンポーネントでv-modelを使用する
+const ratings = ref<string>('');
 
 </script>
 
@@ -105,6 +110,9 @@ watch (radios, () => { console.log('radios', radios.value) })
         <input id="how-other" name="how" type="radio" value="other" v-model="radios"/>
         <label for="how-other">Other</label>
       </div>
+    </div>
+    <div>
+      <Rating v-model="ratings"/>
     </div>
     <div>
       <!-- prevent → modifiersの一種 処理に追加の処理を行うようなもの -->
