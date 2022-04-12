@@ -33,8 +33,6 @@ const onSubmit = (e: Event) => {
     interest: interest.value,
   })
 
-  console.log(dbUrl);
-
   userName.value = ''
   interest.value = []
 }
