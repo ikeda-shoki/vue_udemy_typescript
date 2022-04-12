@@ -21,12 +21,16 @@
 
   // セクション10
   import Form from './components/Form.vue';
+
+  // セクション11
+  import FormAnother from './components/FormAnother.vue';
 </script>
 
 <template>
   <!-- <Reservation /> セクション9 -->
   <!-- <TodoLists /> セクション10 -->
-  <Form />
+  <!-- <Form /> セクション10 v-modelについてと連携、modifiers(修飾詞) -->
+  <FormAnother />
 </template>
 
 <style>
