@@ -17,7 +17,7 @@ const interest = ref([])
 const onSubmit = (e: Event) => {
   // fetchという組み込み関数で外部のURLのサーバーと連携することも可能
   // FireBaseのリアルタイムDBでは .json が必須
-  // fetch('https://vue-example-742e9-default-rtdb.firebaseio.com/surveys.json', {
+  // fetch(dbUrl, {
   //   // methodと、headersに関しては下記のように書くこと→設定のようなもの
   //   method: 'POST',
   //   headers: {
@@ -57,13 +57,7 @@ const onSubmit = (e: Event) => {
         <label for="interest-vue">Vue.js</label>
       </div>
       <div>
-        <input
-          id="interest-angular"
-          name="interest"
-          type="checkbox"
-          value="angular"
-          v-model="interest"
-        />
+        <input id="interest-angular" name="interest" type="checkbox" value="angular" v-model="interest" />
         <label for="interest-angular">Angular.js</label>
       </div>
     </div>
@@ -115,8 +109,8 @@ input[type="radio"] {
   margin-right: 1rem;
 }
 
-input[type="checkbox"] + label,
-input[type="radio"] + label {
+input[type="checkbox"]+label,
+input[type="radio"]+label {
   font-weight: normal;
 }
 
