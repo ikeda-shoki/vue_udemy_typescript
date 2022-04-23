@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import axios from 'axios';
 
 // 環境変数の読み込み .env　ファイルから読み込んでいる
@@ -13,6 +13,25 @@ const vFocus = {
 
 const userName = ref<string>('')
 const interest = ref([])
+const data = ref();
+const isLoading = ref<boolean>(false);
+const err = ref()
+
+onMounted(async() => {
+  isLoading.value = true;
+
+  try {
+    const response = await axios.get(dbUrl);
+    if (response.status  !== 200) {
+      throw new Error('サーバー側のエラー')
+    }
+    data.value = response
+  } catch (e) {
+    err.value = new Error('エラーが発生しました。');
+  }
+
+  isLoading.value = false;
+})
 
 const onSubmit = (e: Event) => {
   // fetchという組み込み関数で外部のURLのサーバーと連携することも可能
@@ -61,6 +80,19 @@ const onSubmit = (e: Event) => {
         <label for="interest-angular">Angular.js</label>
       </div>
     </div>
+
+    <div v-if="isLoading">
+      Loading.....
+    </div>
+
+    <div v-else>
+      {{ data }}
+    </div>
+
+    <div v-if="err">
+      {{ err }}
+    </div>
+
     <div>
       <button @click.prevent="onSubmit">Save Data</button>
     </div>

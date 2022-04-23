@@ -10,7 +10,7 @@ const userName = ref<string>('');
 
 // mounted は画面にVueがHTMLにマウントされる際に挙動する
 const vFocus = {
-  mounted: (el: HTMLElemnt, binding: DirectiveBinding) => {
+  mounted: (el: HTMLElement, binding: DirectiveBinding) => {
     // el に対して focus() メソッドでinputタグに自動でフォーカス(選択)される
     el.focus();
 
